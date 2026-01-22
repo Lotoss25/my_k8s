@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-app
+
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: python-web
+  template:
+    metadata:
+      labels:
+        app: python-web
+    spec:
+      containers:
+        - name: python
+          image: lotoss25/my-super-python:latest
+          ports:
+            - containerPort: 5000
+          env:
+            - name: DB_HOST
+              value: "postgres-service" # Ми створимо цей сервіс пізніше
+            - name: DB_USER
+              value: "lotoss"
+            - name: DB_PASSWORD
+              value: "1231123a"
+            - name: DB_NAME
+              value: "visit_counter"

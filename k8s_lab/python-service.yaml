@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: python-service # Внутрішнє DNS-ім'я
+spec:
+  selector:
+    app: python-web
+  ports:
+    - protocol: TCP
+      port: 5000       # На якому порту відповідає сервіс
+      targetPort: 5000 # На який порт слати в под
+  type: ClusterIP      # Тільки для внутрішнього використання (ззовні не доступний)

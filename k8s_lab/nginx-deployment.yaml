@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-nginx-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+        # --- УВАГА: volumeMounts має бути на рівні з image ---
+        volumeMounts:
+        - name: nginx-config-volume
+          mountPath: /etc/nginx/conf.d
+      # --- УВАГА: volumes має бути на рівні з containers (не всередині!) ---
+      volumes:
+      - name: nginx-config-volume
+        configMap:
+          name: nginx-conf

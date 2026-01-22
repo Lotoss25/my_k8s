@@ -1,0 +1,19 @@
+---
+- name: Prepare Server for Battle
+  hosts: servers       # Беремо групу [servers] з інвентаря
+  become: yes          # Виконувати команди через sudo (від адміна)
+
+  tasks:
+    - name: Update apt cache  # Аналог sudo apt update
+      apt:
+        update_cache: yes
+
+    - name: Install essential tools # Аналог sudo apt install ...
+      apt:
+        name:
+          - git
+          - curl
+          - htop
+          - tree
+          - vim
+        state: present

@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+spec:
+  replicas: 1  # База має бути одна! (Для простоти)
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:15-alpine
+        ports:
+        - containerPort: 5432
+        env:  # Змінні, як у Docker Compose
+        - name: POSTGRES_USER
+          value: "lotoss"
+        - name: POSTGRES_PASSWORD
+          value: "1231123a"
+        - name: POSTGRES_DB
+          value: "visit_counter"
+        volumeMounts:  # Монтуємо "флешку" всередину
+        - mountPath: /var/lib/postgresql/data
+          name: postgres-storage
+      volumes:  # Підключаємо нашу заявку (PVC)
+      - name: postgres-storage
+        persistentVolumeClaim:
+          claimName: postgres-pvc
