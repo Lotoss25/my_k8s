@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  youtube-pinger:
+    image: ping-bot:latest
+    container_name: ping-youtube
+    environment:
+      - SITE=youtube.com
+
+
+  2ip-pinger:
+    image: ping-bot:latest
+    container_name: ping-2ip
+    environment:
+      - SITE=2ip.ua

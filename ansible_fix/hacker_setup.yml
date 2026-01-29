@@ -1,0 +1,19 @@
+---
+- name: Setup Hacker Station
+  hosts: my_pc
+  become: yes  # Потрібні права адміна для установки програм
+
+  tasks:
+    # Завдання 1: Встановити програму
+    - name: Install htop
+      apt:
+        name: htop
+        state: present
+        update_cache: yes  # Це як sudo apt update
+
+    # Завдання 2: Створити секретну папку
+    - name: Create secret directory
+      file:
+        path: /home/user/hacker_secret  # ЗАМІНИ 'user' НА СВОГО ЮЗЕРА! (глянь whoami)
+        state: directory
+        mode: '0700' # Тільки я можу читати

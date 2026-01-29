@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ping-army
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pinger
+  template:
+    metadata:
+      labels:
+        app: pinger
+    spec:
+      containers:
+        - name: ping-bot
+          image: ping-bot
+          imagePullPolicy: Never
+          env:
+            - name: SITE
+              value: "google.com"

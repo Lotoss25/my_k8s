@@ -16,3 +16,4 @@
 .wget-hsts
 kubectl
 minikube-linux-amd64
+hacker_secret
