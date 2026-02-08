@@ -26,3 +26,5 @@ hacker_secret
 # Ігнорувати файли стану (ТАМ ПАРОЛІ! НІКОЛИ НЕ КОМІТЬ ЇХ!)
 *.tfstate
 *.tfstate.backup
+.env
+.docker
