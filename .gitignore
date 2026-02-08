@@ -28,3 +28,6 @@ hacker_secret
 *.tfstate.backup
 .env
 .docker
+my-site/backup
+my-site/backups
+.selected_editor

@@ -5,3 +5,8 @@ services:
       - "${APP_PORT}:80"
   backend:
     image: traefik/whoami:latest
+  backup:
+    build: .
+    command: /usr/local/bin/backup.sh
+    volumes:
+      - "./backups:/usr/share/nginx/html/backup"
