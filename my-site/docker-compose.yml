@@ -7,6 +7,6 @@ services:
     image: traefik/whoami:latest
   backup:
     build: .
-    command: /usr/local/bin/backup.sh
+    command: /bin/bash -c "/usr/local/bin/backup.sh >> /usr/share/nginx/html/backup/backup.log 2>&1"
     volumes:
       - "./backups:/usr/share/nginx/html/backup"
