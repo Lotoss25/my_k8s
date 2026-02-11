@@ -1,0 +1,17 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted  # <--- Головна зміна! Ми кажемо "запустись на моєму комп'ютері"
+    steps:
+      - name: Update and Restart
+        run: |
+          cd ~               # Йдемо в корінь, де ініціалізований git
+          git pull origin main
+          cd ~/my-site       # Тепер йдемо в папку з docker-compose.yml
+          docker compose up -d --build --remove-orphans

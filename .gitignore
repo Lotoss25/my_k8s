@@ -33,3 +33,4 @@ my-site/backups
 .selected_editor
 actions-runner
 .config
+repo_clone

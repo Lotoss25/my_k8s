@@ -9,9 +9,10 @@ jobs:
   deploy:
     runs-on: self-hosted  # <--- Головна зміна! Ми кажемо "запустись на моєму комп'ютері"
     steps:
-      - name: Update and Restart
+      - uses: actions/checkout@v3          # <--- КРОК 1: Скачати код з GitHub
+      - name: Run Ansible Playbook
+        env:
+          ANSIBLE_BECOME_PASS: ${{ secrets.ANSIBLE_SUDO_PASS }}
         run: |
-          cd ~               # Йдемо в корінь, де ініціалізований git
-          git pull origin main
-          cd ~/my-site       # Тепер йдемо в папку з docker-compose.yml
-          docker compose up -d --build --remove-orphans
+          cd /home/user/ansible-learn # Заходимо в папку, де лежать плейбуки
+          ansible-playbook -i inventory.ini setup.yml
