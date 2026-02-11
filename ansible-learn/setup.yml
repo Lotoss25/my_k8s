@@ -1,0 +1,45 @@
+---
+- name: Setup my server
+  hosts: local
+  become: yes  # Це означає "виконуй як sudo"
+
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install Git
+      apt:
+        name: git
+        state: present
+
+    - name: Install vim
+      apt:
+        name: vim
+        state: present
+
+    - name: Create configuration directory
+      file:
+        path: /home/user/ansible-learn/server_configs  # Вкажіть повний шлях (або ~/server_configs)
+        state: directory
+        mode: '0755'                     # Права доступу (як chmod)
+
+    - name: Clone my website code
+      become: no
+      git:
+        repo: 'git@github.com:Lotoss25/my_k8s.git'     # Тільки основне посилання!
+        dest: /home/user/ansible-learn/repo_clone      # Сюди впаде все (і my-site, і .github)
+        version: main
+        force: yes
+
+    - name: Create file .env for configuration
+      copy:
+        remote_src: yes
+        src: '/home/user/ansible-learn/repo_clone/my-site/.env.example'
+        dest: '/home/user/ansible-learn/repo_clone/my-site/.env'
+
+    - name: Install our site
+      become: no
+      command: docker compose up -d --build
+      args:
+        chdir: /home/user/ansible-learn/repo_clone/my-site
