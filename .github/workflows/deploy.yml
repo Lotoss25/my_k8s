@@ -14,5 +14,5 @@ jobs:
         env:
           ANSIBLE_BECOME_PASS: ${{ secrets.ANSIBLE_SUDO_PASS }}
         run: |
-          cd /home/user/ansible-learn # Заходимо в папку, де лежать плейбуки
+          cd ansible-learn # Заходимо в папку, де лежать плейбуки
           ansible-playbook -i inventory.ini setup.yml
