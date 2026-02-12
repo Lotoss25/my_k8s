@@ -34,3 +34,4 @@ my-site/backups
 actions-runner
 .config
 repo_clone
+.putty
