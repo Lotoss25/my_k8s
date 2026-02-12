@@ -14,7 +14,7 @@ fi
 # 3. Ставимо софт
 echo "📦 Встановлюємо Git та Ansible..."
 sudo apt update
-sudo apt install -y git
+sudo apt install -y git software-properties-common
 sudo apt-add-repository --yes --update ppa:ansible/ansible
 sudo apt install -y ansible
 
