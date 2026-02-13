@@ -18,6 +18,7 @@ jobs:
         env:
           ANSIBLE_BECOME_PASS: ${{ secrets.ANSIBLE_SUDO_PASS }}
           ANSIBLE_HOST_KEY_CHECKING: "False"
+          ANSIBLE_SSH_ARGS: "-o ForwardAgent=yes -o ControlMaster=auto -o ControlPersist=60s"
         run: |
           cd ansible-learn # Заходимо в папку, де лежать плейбуки
           ansible-playbook -i inventory.ini setup.yml
