@@ -4,7 +4,7 @@ services:
     ports:
       - "${APP_PORT}:80"
   backend:
-    image: containous/whoami
+    image: nginx:alpine
   backup:
     build: .
     command: /bin/bash -c "/usr/local/bin/backup.sh >> /usr/share/nginx/html/backup/backup.log 2>&1"
