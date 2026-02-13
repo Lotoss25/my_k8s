@@ -17,6 +17,7 @@ jobs:
       - name: Run Ansible Playbook
         env:
           ANSIBLE_BECOME_PASS: ${{ secrets.ANSIBLE_SUDO_PASS }}
+          ANSIBLE_HOST_KEY_CHECKING: "False"
         run: |
           cd ansible-learn # Заходимо в папку, де лежать плейбуки
           ansible-playbook -i inventory.ini setup.yml
