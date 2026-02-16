@@ -7,22 +7,42 @@ on:
 
 jobs:
   deploy:
+    # 1. СТРАТЕГІЯ ЗАПУСКУ
     strategy:
+      # Матриця створює паралельні завдання. 
+      # GitHub запустить цей джоб двічі: один раз для 'oracle', другий — для 'wsl'.
       matrix:
         server_label: [oracle, wsl]
-      fail-fast: false
-    runs-on: [self-hosted, "${{ matrix.server_label }}"]  # <--- Головна зміна! Ми кажемо "запустись на моєму комп'ютері"
+      fail-fast: false # Якщо один впаде (наприклад, WSL вимкнений), інший продовжить роботу
+
+    # 2. ВИБІР ВИКОНАВЦЯ (RUNNER)
+    # Ми шукаємо self-hosted ранер, який має мітку з нашої матриці (oracle або wsl)
+    runs-on: [self-hosted, "${{ matrix.server_label }}"]
+
     steps:
-      - uses: actions/checkout@v3          # <--- КРОК 1: Скачати код з GitHub
-      - name: Setup SSH                    # Додаємо ssh доступ
+      - uses: actions/checkout@v3
+        # КРОК 1: Скачати код з GitHub на ранер
+
+      - name: Setup SSH
         uses: webfactory/ssh-agent@v0.7.0
         with:
-            ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          # Додаємо SSH ключ, щоб Ansible міг ходити на GitHub (якщо треба) або на інші сервери
+
       - name: Run Ansible Playbook
         env:
+          # ЛОГІКА ВИБОРУ ПАРОЛЯ SUDO:
+          # "Якщо (&&) мітка == 'wsl', то беремо секрет WSL_SUDO_PASS.
+          #  Інакше (||) беремо секрет ANSIBLE_SUDO_PASS (для Oracle)".
           ANSIBLE_BECOME_PASS: ${{ matrix.server_label == 'wsl' && secrets.WSL_SUDO_PASS || secrets.ANSIBLE_SUDO_PASS }}
+          
+          # Відключаємо перевірку хоста, щоб Ansible не питав "Are you sure?" і не зависав
           ANSIBLE_HOST_KEY_CHECKING: "False"
+          
+          # Дозволяємо перекидати SSH-ключі (Agent Forwarding), щоб сервер міг качати з Git
           ANSIBLE_SSH_ARGS: "-o ForwardAgent=yes -o ControlMaster=auto -o ControlPersist=60s"
         run: |
-          cd ansible-learn # Заходимо в папку, де лежать плейбуки
+          cd ansible-learn
+          # Запускаємо плейбук. Завдяки 'hosts: local' у inventory.ini, 
+          # кожен ранер буде налаштовувати сам себе.
           ansible-playbook -i inventory.ini setup.yml
