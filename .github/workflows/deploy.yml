@@ -7,7 +7,11 @@ on:
 
 jobs:
   deploy:
-    runs-on: self-hosted  # <--- Головна зміна! Ми кажемо "запустись на моєму комп'ютері"
+    strategy:
+      matrix:
+        server_label: [oracle, wsl]
+      fail-fast: false
+    runs-on: [self-hosted, "${{ matrix.server_label }}"]  # <--- Головна зміна! Ми кажемо "запустись на моєму комп'ютері"
     steps:
       - uses: actions/checkout@v3          # <--- КРОК 1: Скачати код з GitHub
       - name: Setup SSH                    # Додаємо ssh доступ
