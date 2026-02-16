@@ -1,6 +1,6 @@
 ---
 - name: Setup my server
-  hosts: web
+  hosts: local
   become: yes  # Це означає "виконуй як sudo"
 
   tasks:
