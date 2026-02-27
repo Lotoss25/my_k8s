@@ -20,5 +20,5 @@
 
 ---
 **Контакти:**
-* **LinkedIn:** [https://www.linkedin.com/in/lotoss/](https://www.linkedin.com/in/lotoss/)
-* [cite_start]**Email:** lotoss25@gmail.com [cite: 2]
+* **LinkedIn:** https://www.linkedin.com/in/lotoss/
+* **Email:** lotoss25@gmail.com 
