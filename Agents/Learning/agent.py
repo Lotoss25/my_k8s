@@ -30,7 +30,7 @@ def analyze_error(error_message):
         ]
     }
     api_headers = {
-        "Authorization" : "Bearer " + "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"
+        "Authorization" : "Bearer " + "your_openrouter_api_key"
     }
     req = requests.post("https://openrouter.ai/api/v1/chat/completions", json=analyze, headers=api_headers)
     ai_message = req.json()["choices"][0]["message"]
