@@ -28,6 +28,7 @@ hacker_secret
 *.tfstate
 *.tfstate.backup
 .env
+.env.*
 .docker
 my-site/backup
 my-site/backups
@@ -36,3 +37,11 @@ actions-runner
 .config
 repo_clone
 .putty
+week1_recall.md
+career_analysis.md
+week2_recall.md
+week3_recall.md
+week4_recall.md
+week5_recall.md
+learning_plan.md
+python_cheatsheet.md
