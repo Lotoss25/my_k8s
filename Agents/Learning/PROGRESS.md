@@ -1,6 +1,39 @@
 # 🗺️ Карта прогресу: Python → AI Agent Orchestration
 
-## Що ти вже знаєш (і де це в коді)
+## Контекст для AI (прочитай це першим!)
+
+**Хто я:** IT-ениикей зі стажем, переходжу в AI Agent Orchestration Engineer.
+**Фон:** DevOps (Linux, Docker, K8s, Terraform, Ansible, Git), базовий Python.
+**Мета:** CrewAI + Python на рівні production через 12-тижневий план.
+**Стиль навчання:** НЕ писати код за мене! Я пишу сам, AI — наставник/перевіряє.
+**Методологія:** Recall кожну сесію (перевірка знань без підглядання), gamification (Diablo-аналогії: суммонер, скелети, данжони).
+**Моя проблема:** Раніше вчив з AI і все відклалось на 20%, тому тепер пишу руками.
+
+### Дати сесій
+- 12.04.2026 — Тижні 1 (ООП: class, self, __init__, наслідування)
+- 13.04.2026 — Тиждень 1 продовження (OrchestratorAgent, super(), list comprehension)
+- 14.04.2026 — Тиждень 2 (.env, logging, try/except, custom exceptions)
+- 19.04.2026 — Тиждень 2-3 (logging fix, async/await, asyncio.gather)
+- 21.04.2026 — Тиждень 3-4 (async recall, pytest, assert, if __name__)
+- 23.04.2026 — Тиждень 5 (CrewAI source code, Agent(BaseAgent), Pydantic intro)
+- 26.04.2026 — Тиждень 5 (переписали agent.py на Pydantic, оновили тести)
+- 27.04.2026 — Recall Тижнів 1-5, створення PROGRESS.md
+- 09.05.2026 — Поточна сесія
+
+### Recall результати (відстежуй прогрес!)
+- Тиждень 1 recall: 3/3 ✅ (self, super, наслідування)
+- Тиждень 2-3 recall: 4/6 (await і async def — часткові відповіді)
+- Тиждень 4 recall: 3/3 ✅ (assert, test_ naming, __name__)
+- Тиждень 5 recall: 6/7 (сплутав Pydantic з if __name__)
+
+### Слабкі місця (перевіряй частіше!)
+- await vs звичайне очікування — часто забуває різницю
+- Pydantic vs if __name__ — плутає ці дві концепції
+- load_dotenv() — забував через 5 днів перерви
+
+---
+
+## Що вже знаю (і де це в коді)
 
 ### Тиждень 1: ООП ← файл `agent.py`
 - `class`, `self`, `__init__` — створення класів
@@ -15,25 +48,28 @@
 - `logging` замість `print` — логи в файл з часом
 - `try/except` з **конкретними** помилками (не Exception)
 - Custom Exception — `class ZabbixError(Exception): pass`
+- `encoding="utf-8"` в logging на Windows
 
 ### Тиждень 3: Async ← файл `async_learn.py`
 - `async def`, `await` — неблокуюче очікування
 - `asyncio.gather()` — запуск всіх одночасно
 - Час = найповільніший, не сума
 - Обмеження: `await` тільки в `async def`
+- aiohttp — async версія requests (не використовуємо в CrewAI tools)
 
 ### Тиждень 4: Тести ← файл `test_agent.py`
 - `pytest` — автоматична перевірка коду
 - `assert` — "я стверджую що це правда"
 - Файли і функції починаються з `test_`
 - `if __name__ == "__main__":` — щоб при імпорті не виконувався зайвий код
+- 5 тестів проходять (creation, level_up, audit, orchestrator, wrong_type)
 
 ### Тиждень 5: CrewAI зсередини + Pydantic ← файл `agent.py` (оновлений)
-- CrewAI Agent — звичайний клас з `BaseModel`
-- Pydantic `Field()` — валідація замість ручних перевірок
+- CrewAI Agent — звичайний клас з `BaseModel` + Pydantic `Field()`
 - Pydantic замінює `__init__`, але **не методи і не self**
-- Keyword args: `Agent(name="Orion")`
-- Не можна додавати поля яких нема в класі
+- Keyword args: `Agent(name="Orion")` замість `Agent("Orion")`
+- Не можна додавати поля яких нема в класі (помилка з audited)
+- Наслідування без super() — просто додаєш нові поля
 
 ---
 
@@ -43,6 +79,7 @@
 - [ ] Memory і Knowledge в CrewAI
 - [ ] Custom Tools
 - [ ] MCP (Model Context Protocol)
+- [ ] Production-grade проєкт (Тижні 9-12)
 
 ## Файли проєкту
 ```
@@ -52,5 +89,13 @@ Agents/Learning/
 ├── async_learn.py        ← async/await приклади
 ├── zabbix_daily_reports.py ← реальний проект (.env, logging, exceptions)
 ├── python_cheatsheet.md  ← шпаргалка з усіма концепціями
+├── PROGRESS.md           ← цей файл
 └── .env                  ← секрети (НЕ пушити в git!)
 ```
+
+## Як продовжити в новій розмові
+Скажи AI:
+> Я вчу Python + CrewAI. Прочитай файли PROGRESS.md і python_cheatsheet.md
+> в папці Agents/Learning/. Там весь мій контекст і прогрес. Продовжуй звідти.
+> Стиль: ти навчаєш мене, я пишу код сам, ти перевіряєш. Роби recall кожну сесію.
+> Не підігрувай, не пропускай теми. Якщо пройшли дні — перевір що я ще пам'ятаю.
