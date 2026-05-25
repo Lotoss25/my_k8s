@@ -2,7 +2,7 @@
 
 ## Контекст для AI (прочитай це першим!)
 
-**Хто я:** IT-ениикей зі стажем, переходжу в AI Agent Orchestration Engineer.
+**Хто я:** IT зі стажем, переходжу в AI Agent Orchestration Engineer.
 **Фон:** DevOps (Linux, Docker, K8s, Terraform, Ansible, Git), базовий Python.
 **Мета:** CrewAI + Python на рівні production через 12-тижневий план.
 **Стиль навчання:** НЕ писати код за мене! Я пишу сам, AI — наставник/перевіряє.
