@@ -18,15 +18,20 @@
 - 23.04.2026 — Тиждень 5 (CrewAI source code, Agent(BaseAgent), Pydantic intro)
 - 26.04.2026 — Тиждень 5 (переписали agent.py на Pydantic, оновили тести)
 - 27.04.2026 — Recall Тижнів 1-5, створення PROGRESS.md
+<<<<<<< HEAD
 - 09-10.05.2026 — Recall після 12 днів, повтор super() і Pydantic, старт Тижня 6
 - 12-13.05.2026 — Recall, Custom Tools (@tool, psutil, docstring)
 - 17.05.2026 — Recall після 4 днів, crew_monitor (2 агенти + tools конвеєр)
+=======
+- 09.05.2026 — Поточна сесія
+>>>>>>> 89c54abc7c46a0fb3de22abcd6b3dd32975cbfec
 
 ### Recall результати (відстежуй прогрес!)
 - Тиждень 1 recall: 3/3 ✅ (self, super, наслідування)
 - Тиждень 2-3 recall: 4/6 (await і async def — часткові відповіді)
 - Тиждень 4 recall: 3/3 ✅ (assert, test_ naming, __name__)
 - Тиждень 5 recall: 6/7 (сплутав Pydantic з if __name__)
+<<<<<<< HEAD
 - 09-10.05 recall: 3/8 → після повтору super() закрито ✅, Pydantic Field частково
 - 13.05 recall: 6/8 ✅ (BaseModel і Field нарешті стабільно!)
 - 17.05 recall: 5/7 (Agent поля ⚠️, async ❌ знову)
@@ -36,6 +41,13 @@
 - Agent поля — плутає role/goal/backstory з tools/description
 - super() — розуміє приблизно, деталі плаваючі
 - ✅ ЗАКРИТО: BaseModel, Field, Task поля, Process регістр
+=======
+
+### Слабкі місця (перевіряй частіше!)
+- await vs звичайне очікування — часто забуває різницю
+- Pydantic vs if __name__ — плутає ці дві концепції
+- load_dotenv() — забував через 5 днів перерви
+>>>>>>> 89c54abc7c46a0fb3de22abcd6b3dd32975cbfec
 
 ---
 
@@ -80,12 +92,19 @@
 ---
 
 ## Де зараз (Тиждень 6+)
+<<<<<<< HEAD
 - [x] Як `Crew.kickoff()` запускає агентів
 - [x] `Process.sequential` vs `Process.hierarchical` (знає різницю)
 - [x] Custom Tools (`@tool`, docstring, psutil)
 - [x] Кілька tools + агент сам вибирає
 - [x] Два агенти з різними ролями (інженер + аналітик)
 - [ ] Memory і Knowledge в CrewAI
+=======
+- [ ] Як `Crew.kickoff()` запускає агентів
+- [ ] `Process.sequential` vs `Process.hierarchical`
+- [ ] Memory і Knowledge в CrewAI
+- [ ] Custom Tools
+>>>>>>> 89c54abc7c46a0fb3de22abcd6b3dd32975cbfec
 - [ ] MCP (Model Context Protocol)
 - [ ] Production-grade проєкт (Тижні 9-12)
 
@@ -96,10 +115,13 @@ Agents/Learning/
 ├── test_agent.py         ← 5 тестів
 ├── async_learn.py        ← async/await приклади
 ├── zabbix_daily_reports.py ← реальний проект (.env, logging, exceptions)
+<<<<<<< HEAD
 ├── crew_basics.py        ← CrewAI: Agent, Task, Crew, Process.sequential
 ├── tool_basics.py        ← Custom Tools: @tool, psutil, 3 tools
 ├── crew_monitor.py       ← 2 агенти (інженер+аналітик), tools конвеєр
 ├── crewai_learn.py       ← старий CrewAI код (reference, не підглядувати)
+=======
+>>>>>>> 89c54abc7c46a0fb3de22abcd6b3dd32975cbfec
 ├── python_cheatsheet.md  ← шпаргалка з усіма концепціями
 ├── PROGRESS.md           ← цей файл
 └── .env                  ← секрети (НЕ пушити в git!)
