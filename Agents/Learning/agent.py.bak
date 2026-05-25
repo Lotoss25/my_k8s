@@ -1,6 +1,5 @@
 import json
 import requests
-from pydantic import BaseModel, Field
 
 
 
@@ -9,10 +8,10 @@ from pydantic import BaseModel, Field
 #     "level" : 1
 # }
 
-class Agent(BaseModel):
-    name: str = Field(description="Ім'я агента")
-    level: int = Field(default=1, description="Рівень агента")
-    audited: bool = Field(default=False, description="Статус аудиту")
+class Agent:
+    def __init__(self, name):
+        self.name = name
+        self.level = 1
 
     def level_up(self):
         self.level += 1
@@ -23,7 +22,9 @@ class Agent(BaseModel):
         return(f"Мій нік: {self.name}, мій рівень: {self.level}")
 
 class AuditorAgent(Agent):
-    audits: int = Field(default=0, description="Кількість аудитів")
+    def __init__(self, name):
+        super().__init__(name)
+        self.audits = 0
     
     def audit(self, target: Agent):
         if not isinstance(target, Agent):
@@ -35,7 +36,9 @@ class AuditorAgent(Agent):
 
 
 class OrchestratorAgent(Agent):
-    team: list[Agent] = []
+    def __init__(self, name):
+        super().__init__(name)
+        self.team = []
     def summon(self, agent: Agent):
         self.team.append(agent)
     def __str__(self):
@@ -80,8 +83,8 @@ def analyze_error(error_message):
 
 
 if __name__ == "__main__":
-    orion = Agent(name="Orion")
-    checker = AuditorAgent(name="Checker")
+    orion = Agent("Orion")
+    checker = AuditorAgent("Checker")
 
     orion.level_up()
     orion.level_up()
@@ -89,7 +92,7 @@ if __name__ == "__main__":
     checker.level_up()
     checker.audit(orion)
 
-    commander = OrchestratorAgent(name="Commander")
+    commander = OrchestratorAgent("Commander")
     commander.summon(orion)
     commander.summon(checker)
 

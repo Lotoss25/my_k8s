@@ -1,9 +1,18 @@
 from crewai import Agent, Task, Crew, Process
 from crewai.tools import tool
-import os, requests
+import os, requests, logging, aiohttp, asyncio
 from dotenv import load_dotenv
 load_dotenv()
 
+logging.basicConfig(
+    level=logging.INFO,
+    filename="zabbix_agent.log",     # ← ім'я файлу логів
+    encoding="utf-8",
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
+logger = logging.getLogger(__name__)
+
+class ZabbixError(Exception): pass
 
 @tool
 def get_zabbix_hosts(query: str = ""):
@@ -25,9 +34,14 @@ def get_zabbix_hosts(query: str = ""):
     
     try:
         response = requests.post(url, json=payload, headers=headers)
-        #print("ВІДПОВІДЬ СЕРВЕРА:", response.text)
+        # #logger.info("ВІДПОВІДЬ СЕРВЕРА:", response.text)
         data = response.json()
         
+        # async with aiohttp.ClientSession() as session:
+        #     async with session.post(url, json=payload, headers=headers) as response:
+        #         data = await response.json()
+
+
         # Zabbix завжди повертає статус 200, тому помилки шукаємо всередині JSON
         if "error" in data:
             return f"Помилка Zabbix API: {data['error']['data']}"
@@ -42,14 +56,21 @@ def get_zabbix_hosts(query: str = ""):
             
         return result_string
         
-    except Exception as e:
-        return f"Помилка з'єднання: {str(e)}"
+    except requests.ConnectionError:
+        logger.error("Zabbix недоступний")
+        return "Zabbix недоступний"
+    except requests.Timeout:
+        logger.error("Zabbix не відповідає (timeout)")
+        return "Zabbix не відповідає (timeout)"
+    except ValueError:
+        logger.error("Zabbix повернув невалідну відповідь")
+        return "Zabbix повернув невалідну відповідь"
 
 
 @tool
 def get_zabbix_metrics(host_id: str):
     """Отримує список метрик (Items) та їхні останні значення для конкретного сервера."""
-    print("ОТРИМУЮ МЕТРИКИ ДЛЯ СЕРВЕРА:", host_id)
+    logger.info(f"ОТРИМУЮ МЕТРИКИ ДЛЯ СЕРВЕРА: {host_id}")
     url = os.environ.get("ZABBIX_URL")
     token = os.environ.get("ZABBIX_TOKEN")
     
@@ -71,6 +92,10 @@ def get_zabbix_metrics(host_id: str):
     try:
         response = requests.post(url, json=payload, headers=headers)
         data = response.json()
+
+        # async with aiohttp.ClientSession() as session:
+        #     async with session.post(url, json=payload, headers=headers) as response:
+        #         data = await response.json()
         
         if "error" in data:
             return f"Помилка Zabbix API: {data['error']['data']}"
@@ -86,8 +111,15 @@ def get_zabbix_metrics(host_id: str):
             
         return result_string
         
-    except Exception as e:
-        return f"Помилка з'єднання: {str(e)}"
+    except requests.ConnectionError:
+        logger.error("Zabbix недоступний")
+        return "Zabbix недоступний"
+    except requests.Timeout:
+        logger.error("Zabbix не відповідає (timeout)")
+        return "Zabbix не відповідає (timeout)"
+    except ValueError:
+        logger.error("Zabbix повернув невалідну відповідь")
+        return "Zabbix повернув невалідну відповідь"
 
 
 @tool
@@ -137,4 +169,4 @@ crew = Crew(
 )
 
 result = crew.kickoff()
-print(result)
+logger.info(result)
