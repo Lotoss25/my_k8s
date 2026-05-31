@@ -46,3 +46,5 @@ week5_recall.md
 learning_plan.md
 python_cheatsheet.md
 zabbix_agent.log
+__pycache__
+reports/
